@@ -2,8 +2,14 @@ import React from 'react'
 import { Link, useLocation } from "react-router-dom";
 
 
-const Navbar = () => {
+const Navbar = (props) => {
     let location = useLocation();
+
+    
+   const Handlelogout=()=> {
+       localStorage.removeItem('token')
+       props.showAlert(" Logged Out Successfully", "success");
+    }
     
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -22,10 +28,10 @@ const Navbar = () => {
                         </li>
 
                     </ul>
-                    <form className="d-flex">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    {!localStorage.getItem('token') ? <form className="d-flex">
+                        <Link className="btn btn-primary mx-1" to="/login"> Log in</Link>
+                        <Link className="btn btn-primary mx-1" to="/signup"> Sign up</Link>
+                    </form> :<Link className="btn btn-primary mx-1" onClick={Handlelogout} to="/login"> Log out</Link>}
                 </div>
             </div>
         </nav>
